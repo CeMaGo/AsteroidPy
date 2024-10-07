@@ -14,24 +14,32 @@ def main():
     # Set up colors
     BLACK = (0, 0, 0)
 
-    # Test Print
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
+    # Create the title of the Window
+    pygame.display.set_caption("Asteroids Game")
+
+    # Create a clcok object to control the FPS
+    clock = pygame.time.Clock()
+
+    # Initialize delta time
+    dt = 0
 
     # Start the Game loop
     running = True
     while running:
+        # Fill the screen with black color
+        screen.fill(BLACK)
+
+        # Refresh the display
+        pygame.display.flip()
+
+        # Cap the FPS at 60 and get the time passes since last tick
+        dt = clock.tick(60) / 1000 # Convert milliseconds to seconds
+     
         # Check for any evnet, like closing the window
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        # Fill the screen with black color
-        screen.fill(BLACK)
-
-        # Update the display
-        pygame.display.flip()
 
     # Quit Pygame when the loop ends
     pygame.quit()
