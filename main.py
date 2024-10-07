@@ -1,9 +1,6 @@
-# this allows us to use code from
-# the open-source pygame library
-# throughout this file
 import pygame
 from constants import *
-
+from player import Player
 
 def main():
     pygame.init() # pygame.init() -> (numpass, numfail)
@@ -19,15 +16,22 @@ def main():
 
     # Create a clcok object to control the FPS
     clock = pygame.time.Clock()
-
     # Initialize delta time
     dt = 0
+
+    # Instantiate the Player object at the center of the screen
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+    player = Player(x, y)
 
     # Start the Game loop
     running = True
     while running:
         # Fill the screen with black color
         screen.fill(BLACK)
+
+        # Draw the player on the screen
+        player.draw(screen)
 
         # Refresh the display
         pygame.display.flip()
