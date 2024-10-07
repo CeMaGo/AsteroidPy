@@ -24,11 +24,15 @@ def main():
     y = SCREEN_HEIGHT / 2
     player = Player(x, y)
 
-    # Start the Game loop
+    # ========= Start the Game loop ===============>>>
+
     running = True
     while running:
         # Fill the screen with black color
         screen.fill(BLACK)
+
+        # Update the player (including rotation) with the delta time
+        player.update(dt)
 
         # Draw the player on the screen
         player.draw(screen)
