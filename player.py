@@ -30,7 +30,20 @@ class Player(CircleShape):
         if keys [pygame.K_d]:
             self.rotate(dt)
 
-     # Method to generate the triangle shape (given in the prompt)
+        if keys[pygame.K_w]:
+            self.move(dt)
+
+        elif keys[pygame.K_s]:
+            self.move(-dt)
+
+    def move(self, dt):
+        # Vector representing the forward direction based on the players rotation
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        # Update the player's position by adding the forward vector, scaled by speed and dt
+      
+        self.position += forward * PLAYER_SPEED * dt
+
+     # Method to generate the triangle shape (given in the prompt
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
