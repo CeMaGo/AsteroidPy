@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import * 
 
 def main():
     pygame.init() # pygame.init() -> (numpass, numfail)
@@ -24,21 +26,36 @@ def main():
     y = SCREEN_HEIGHT / 2
     player = Player(x, y)
 
+    # Create groups
+    asteroids = pygame.sprite.Group()
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Asteroid.containers = (asteroids, updatable, drawable) 
+    
+    AsteroidField.containers = (updatable,)
+
+    asteroid_field = AsteroidField()
+
+    # Example: Add asteroid to the group
+    asteroid = Asteroid(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50) # Example radius of 50
+    asteroids.add(asteroid)
+
+    #Add player to both groups
+    updatable.add(player)
+    drawable.add(player)
+
+
     # ========= Start the Game loop ===============>>>
 
     running = True
     while running:
-        # Fill the screen with black color
-        screen.fill(BLACK)
 
         # Update the player (including rotation) with the delta time
-        player.update(dt)
+       # player.update(dt)
 
         # Draw the player on the screen
-        player.draw(screen)
-
-        # Refresh the display
-        pygame.display.flip()
+       # player.draw(screen)
 
         # Cap the FPS at 60 and get the time passes since last tick
         dt = clock.tick(60) / 1000 # Convert milliseconds to seconds
@@ -48,6 +65,29 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+        # Get all keys pressed
+        keys = pygame.key.get_pressed()
+
+        # Update all objects in the updatable group
+        for obj in updatable:
+            obj.update(dt)
+
+        #Fill the screen Black
+        screen.fill(BLACK)
+
+        # Update all objects in the drawable group
+        for obj in drawable:
+            obj.draw(screen)
+
+        # Update asteroid
+        asteroid.update(dt)
+
+        # Draw asteroids
+        for asteroid in asteroids:
+            asteroid.draw(screen)
+
+        # Refrech display
+        pygame.display.flip()
 
     # Quit Pygame when the loop ends
     pygame.quit()
